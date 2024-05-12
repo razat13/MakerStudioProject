@@ -38,7 +38,7 @@ const Navbar = () => {
             </div>
           </div>
           <NavLink to="/cart">
-            <button className="btn btn-light"><img src="/cart.svg" alt="logo" style={{height: "20px"}}/></button>
+            <button className="btn btn-light"><img src="/cart.svg" alt="logo" style={{height: "20px"}}/>  ({cartItems.length})</button>
           </NavLink>
         </div>
       </nav>
