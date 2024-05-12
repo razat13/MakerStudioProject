@@ -3,13 +3,14 @@ import Skeleton from 'react-loading-skeleton';
 import { NavLink } from 'react-router-dom';
 import { useAppContext } from '../store/store';
 function Products() {
-    const { searchQuery } = useAppContext();
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(5);
-    const [filter, setFilter] = useState(data);
-
+    const { searchQuery } = useAppContext();  //for the search query
+    const [data, setData] = useState([]);  //for the data we will fetch from the api
+    const [loading, setLoading] = useState(false);  //for the loading logic
+    const [currentPage, setCurrentPage] = useState(1);  //pagination logic setting the initial value of current page
+    const [itemsPerPage] = useState(5);  //pagination logic, specifies the no. of products per page
+    const [filter, setFilter] = useState(data);  //filtering logic according to search query or the categories
+    
+    //fetching the data from api
     useEffect(() => {
         let componentMounted = true;
         const getProducts = async () => {
@@ -25,8 +26,9 @@ function Products() {
             }
         }
         getProducts();
-    }, []);
+    }, []);  //used the UseEffect hook for the first time the page is loaded 
 
+    //useEffect Hook for searching 
     useEffect(() => {
         const filteredProducts = data.filter(product =>
             product.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -34,17 +36,17 @@ function Products() {
         setFilter(filteredProducts);
     }, [searchQuery, data]);
 
-    const totalPages = Math.ceil(filter.length / itemsPerPage);
-    const indexOfLastItem = currentPage * itemsPerPage;
+    const totalPages = Math.ceil(filter.length / itemsPerPage);   //logic for calculating totalpages
+    const indexOfLastItem = currentPage * itemsPerPage;  
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = filter.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = filter.slice(indexOfFirstItem, indexOfLastItem);  //slicing the elements according to the current page
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const Loading = () => {
         return (
             <>
+                {/*Categories Frontend while loading*/ }
                 <div className="col-md-3 my-3">
-
                     <div className="position-sticky" style={{ top: "100px" }}>
                         <h3>Categories</h3>
                         <button className="btn btn-outline-info m-1 btn-sm" onClick={() => setFilter(data)}>All</button>
@@ -55,7 +57,7 @@ function Products() {
                     </div>
 
                 </div>
-
+                {/*Loading logic*/}
                 <div className="col-md-9 py-md-3">
                     <div className="row">
                         <div className="col-6 col-md-6 col-lg-4 mb-3">
@@ -87,12 +89,12 @@ function Products() {
             </>
         )
     }
-
+    //filtering according to category
     const filterProduct = (category) => {
         const updateList = data.filter((x) => x.category === category);
         setFilter(updateList);
     }
-
+    //Frontend for showing products
     const ShowProducts = () => {
         return (
             <>
@@ -111,6 +113,7 @@ function Products() {
 
                 <div className="col-md-9 py-md-3">
                     <div className="row">
+                        {/*Using maps to display and the card method*/}
                         {currentItems.map((product) => {
                             return (
                                 <div className="col-6 col-md-6 col-lg-4 mb-3" key={product.id}>
@@ -142,10 +145,11 @@ function Products() {
             </>
         )
     }
-
+    
     return (
         <div className="container">
             <div className="row">
+                {/*Logic for loading and shwoing products*/}
                 {loading ? <Loading /> : <ShowProducts />}
                 <nav>
                     <ul className="pagination justify-content-center">

@@ -10,7 +10,7 @@ import { AppProvider } from './store/store';
 
 function App() {
   return (
-    <AppProvider>
+    <AppProvider>  {/*Wrapping it in AppProvider so the functions will be globally available*/}
       <div>
         <Navbar />
         <Routes>

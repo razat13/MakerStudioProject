@@ -5,12 +5,12 @@ import { NavLink } from 'react-router-dom';
 import { useAppContext } from '../../src/store/store';
 function Product() {
 
-    const { id } = useParams();
-    const { addToCart } = useAppContext();
-    const [product, setProduct] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const { id } = useParams();  //for getting the id of that product which we have to display
+    const { addToCart } = useAppContext();  //handling the add to cart functionality
+    const [product, setProduct] = useState([]);  //updating the current product
+    const [loading, setLoading] = useState(false); //loading logic
      
-
+    //fetching data
     useEffect(() => {
         const getProduct = async () => {
             setLoading(true);
@@ -20,8 +20,8 @@ function Product() {
             setLoading(false);
         }
         getProduct();
-    }, [id]);
-    
+    }, [id]);  
+    //handing add to card
     const handleAddToCart = (product) => {
         addToCart(product);
     };
@@ -29,6 +29,7 @@ function Product() {
     const Loading = () => {
         return (
             <>
+                {/*The loading logic*/}
                 <div className="row d-flex justify-content-center">
                     <div className="col-md-12">
                         <NavLink className="text-decoration-none text-dark" to={`/`}>
@@ -47,7 +48,8 @@ function Product() {
                                 </div>
                                 <div className="col-md-6">
                                     <div className="border p-4">
-                                        <div className="mt-4 mb-3"> <span className="text-uppercase text-muted brand">                                                <Skeleton height={30} width={150} />
+                                        <div className="mt-4 mb-3"> <span className="text-uppercase text-muted brand">                                                
+                                        <Skeleton height={30} width={150} />
                                         </span>
                                             <h5 className="text-uppercase">
                                                 <Skeleton height={30} width={200} />
@@ -84,12 +86,14 @@ function Product() {
             <>
                 <div className="row d-flex justify-content-center">
                     <div className="col-md-12">
+                        {/*for getting back to homepage*/}
                         <NavLink className="text-decoration-none text-dark" to={`/`}>
                             <div className="d-flex align-items-center m-3">
                                 <i className="fa fa-long-arrow-left"></i>
-                                <span className="ml-1">&nbsp;Back</span>
+                                <span className="ml-1">&nbsp;Back</span>  
                             </div>
                         </NavLink>
+                        {/*Using cards*/}
                         <div>
                             <div className="row">
                                 <div className="col-md-6">
@@ -118,6 +122,7 @@ function Product() {
                                         </div>
                                         <p className="text-muted">{product.description}</p>
                                         <div className="cart mt-4 align-items-center">
+                                        {/*Updating the cart*/}
                     <button className="btn btn-outline-dark text-uppercase mr-2 px-4" onClick={() => handleAddToCart(product)}>Add to Cart</button>
                 </div>
                                     </div>
@@ -133,7 +138,7 @@ function Product() {
     return (
         <>
             <div className="container px-0 mb-5" style={{ marginTop: "66px" }}>
-
+                {/*Loading and showdetails logic*/}
                 {loading ? <Loading /> : <ShowDetails />}
 
             </div>

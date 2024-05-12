@@ -4,8 +4,8 @@ import { useAppContext } from '../../src/store/store';
 
 const Navbar = () => {
   const { searchQuery, setSearchQuery, cartItems } = useAppContext();
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  const location = useLocation();        //using this to make sure that search appears only on the homepage
+  const isHomePage = location.pathname === '/';  //if we are on the homepage, isHomePage will be true
 
   return (
     <div>
@@ -15,7 +15,7 @@ const Navbar = () => {
             <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
               <img src="/search.svg" alt="logo" style={{ height: "20px" }} />
             </button>
-          )}
+          )}   {/*If isHomePage is false we dont have to display the search icon*/}
           <NavLink to="/">
             <img src="/FakeShop.png" alt="logo" style={{ height: "50px" }} />
           </NavLink>
@@ -30,11 +30,11 @@ const Navbar = () => {
               <input
                 className="form-control"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => setSearchQuery(e.target.value)}  
                 list="datalistOptions"
                 id="exampleDataList"
                 placeholder="Type to search..."
-              />
+              />   {/*Taking input for the search query*/}
             </div>
           </div>
           <NavLink to="/cart">
