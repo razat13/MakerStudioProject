@@ -12,10 +12,6 @@ FakeShop is an online shopping platform where users can browse through a variety
 - Remove products from the shopping cart.
 - Navigate between different pages using React Router.
 
-## Screenshots
-
-[Insert screenshots or GIFs of your project here to give users a visual overview.]
-
 ## Technologies Used
 
 - React.js
