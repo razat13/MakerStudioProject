@@ -1,27 +1,31 @@
-def smallest_prime_after_reduction(n):
-    # Function to check if a number is prime
-    def is_prime(x):
-        if x <= 1:
-            return False
-        for i in range(2, int(x**0.5) + 1):
-            if x % i == 0:
-                return False
-        return True
+import math
 
-    # Function to return the sum of prime factors of n
-    def prime_factor_sum(n):
-        factor_sum = 0
-        divisor = 2
-        while divisor * divisor <= n:
-            while n % divisor == 0:
-                factor_sum += divisor
-                n //= divisor
-            divisor += 1
-        if n > 1:
-            factor_sum += n
-        return factor_sum
+# Helper function to find the sum of prime factors
+def prime_factors_sum(n):
+    result = 0
+    # Check for the number of 2s that divide n
+    while n % 2 == 0:
+        result += 2
+        n //= 2
+    # n must be odd at this point so we can skip even numbers
+    for i in range(3, int(math.sqrt(n)) + 1, 2):
+        while n % i == 0:
+            result += i
+            n //= i
+    # This condition is to check if n is a prime number
+    if n > 2:
+        result += n
+    return result
 
-    while not is_prime(n):
-        n = prime_factor_sum(n)
-
+# Main function to find the smallest number n can become
+def smallest_prime_value(n: int) -> int:
+    while True:
+        sum_factors = prime_factors_sum(n)
+        if sum_factors == n:  # If the number is prime and can't be broken down further
+            break
+        n = sum_factors
     return n
+
+# Test cases
+print(smallest_prime_value(9))  # Output: 5
+print(smallest_prime_value(2))  # Output: 2
